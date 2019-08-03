@@ -17,7 +17,8 @@ defmodule ShortWeb.RedirectControllerTest do
       updated_short_url = Repo.get(ShortUrl, short_url.id)
       assert updated_short_url.access_count == 1
       access_record = Repo.get_by(AccessRecord, short_url_id: short_url.id)
-      assert DateTime.to_date(access_record.inserted_at) == DateTime.to_date(DateTime.utc_now())
+
+      assert NaiveDateTime.to_date(access_record.inserted_at) == Date.utc_today()
     end
 
     test "returns an error message when the slug does not exist", %{conn: conn} do
