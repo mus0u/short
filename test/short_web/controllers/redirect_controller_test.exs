@@ -12,7 +12,7 @@ defmodule ShortWeb.RedirectControllerTest do
       assert short_url.access_count == 0
       path = Routes.redirect_path(conn, :do_redirect, short_url.slug)
       conn = get(conn, path)
-      assert redirected_to(conn) =~ "http://crouton.net"
+      assert redirected_to(conn, 301) =~ "http://crouton.net"
 
       updated_short_url = Repo.get(ShortUrl, short_url.id)
       assert updated_short_url.access_count == 1
@@ -42,7 +42,7 @@ defmodule ShortWeb.RedirectControllerTest do
 
       assert """
                url: http://crouton.net
-               short url: www.example.com/#{short_url.slug}
+               short url: http://localhost:8000/#{short_url.slug}
                access count: 3
              """ == resp
     end

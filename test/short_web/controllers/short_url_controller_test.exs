@@ -3,6 +3,28 @@ defmodule Short.ShortUrlControllerTest do
 
   alias Short.Shortening
 
+  describe "GET / create" do
+    test "returns a shortened URL on success", %{conn: conn} do
+      path = Routes.short_url_path(conn, :get_create, %{uri: "https://crouton.net/"})
+      resp =
+        conn
+        |> get(path)
+        |> json_response(200)
+
+      %{"short_url" => "http://localhost:8000/" <> slug} = resp
+      assert String.length(slug) == 8
+    end
+
+    test "returns an error message when uri query parameter is missing", %{conn: conn} do
+      path = Routes.short_url_path(conn, :get_create)
+      resp =
+        conn
+        |> get(path)
+        |> json_response(422)
+      assert %{"errors" => [%{"missing query parameters" => ["uri"]}]} = resp
+    end
+  end
+
   describe "create" do
     test "returns a shortened URL on success", %{conn: conn} do
       params = %{
@@ -21,7 +43,7 @@ defmodule Short.ShortUrlControllerTest do
       %{
         "payload" => %{
           "url" => "https://crouton.net/",
-          "short_url" => "www.example.com/" <> slug
+          "short_url" => "http://localhost:8000/" <> slug
         }
       } = resp
 
