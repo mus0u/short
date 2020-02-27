@@ -42,7 +42,7 @@ defmodule ShortWeb.RedirectControllerTest do
 
       assert """
                url: http://crouton.net
-               short url: http://localhost:8000/#{short_url.slug}
+               short url: http://localhost:8000/u/#{short_url.slug}
                access count: 3
              """ == resp
     end

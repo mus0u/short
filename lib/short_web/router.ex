@@ -8,8 +8,8 @@ defmodule ShortWeb.Router do
   scope "/", ShortWeb do
     get "/shorten", ShortUrlController, :get_create
 
-    get "/:slug", RedirectController, :do_redirect
-    get "/:slug/stats", RedirectController, :stats
+    get "/u/:slug", RedirectController, :do_redirect
+    get "/u/:slug/stats", RedirectController, :stats
   end
 
   scope "/api", ShortWeb do

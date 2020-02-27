@@ -33,6 +33,8 @@ defmodule ShortWeb.ConnCase do
       Ecto.Adapters.SQL.Sandbox.mode(Short.Repo, {:shared, self()})
     end
 
-    {:ok, conn: %{Phoenix.ConnTest.build_conn() | host: "localhost:8000"}}
+    conn = %{Phoenix.ConnTest.build_conn() | host: "localhost", port: 8000}
+
+    {:ok, conn: conn}
   end
 end

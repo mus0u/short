@@ -11,7 +11,7 @@ defmodule Short.ShortUrlControllerTest do
         |> get(path)
         |> json_response(200)
 
-      %{"short_url" => "http://localhost:8000/" <> slug} = resp
+      %{"short_url" => "http://localhost:8000/u/" <> slug} = resp
       assert String.length(slug) == 8
     end
 
@@ -43,7 +43,7 @@ defmodule Short.ShortUrlControllerTest do
       %{
         "payload" => %{
           "url" => "https://crouton.net/",
-          "short_url" => "http://localhost:8000/" <> slug
+          "short_url" => "http://localhost:8000/u/" <> slug
         }
       } = resp
 

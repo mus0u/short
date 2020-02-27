@@ -4,6 +4,8 @@ defmodule ShortWeb.RedirectController do
   alias Short.Shortening
   alias Short.Shortening.ShortUrl
 
+  @port 8000
+
   def do_redirect(conn, %{"slug" => slug}) do
     case Shortening.get_short_url_by_slug(slug) do
       %ShortUrl{url: url} = short_url ->
@@ -26,7 +28,7 @@ defmodule ShortWeb.RedirectController do
         |> put_status(:ok)
         |> text("""
           url: #{short_url.url}
-          short url: #{conn.scheme}://#{conn.host}/#{short_url.slug}
+          short url: #{conn.scheme}://#{conn.host}:#{@port}/u/#{short_url.slug}
           access count: #{short_url.access_count}
         """)
 

@@ -5,6 +5,8 @@ defmodule ShortWeb.ShortUrlController do
   alias Short.Shortening
   alias Short.Shortening.ShortUrl
 
+  @port 8000
+
   def get_create(conn, %{"uri" => url}) do
     with {:ok, short_url} <- Shortening.create_short_url(%{url: url}) do
       conn
@@ -62,6 +64,6 @@ defmodule ShortWeb.ShortUrlController do
   end
 
   defp format_url(%Conn{scheme: scheme, host: host}, %ShortUrl{slug: slug}) do
-    "#{scheme}://#{host}/#{slug}"
+    "#{scheme}://#{host}:#{@port}/u/#{slug}"
   end
 end
